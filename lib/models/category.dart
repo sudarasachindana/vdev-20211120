@@ -1,6 +1,4 @@
-// To parse this JSON data, do
-//
-//     final jokesApi = jokesApiFromJson(jsonString);
+
 
 import 'dart:convert';
 
