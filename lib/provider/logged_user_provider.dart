@@ -15,14 +15,10 @@ class LoggedUserProvider extends ChangeNotifier {
 
   void setCurrentUserData() async{
     await UserPreferences().getUser().then((value){
-      print("User notifier service run");
-      print(value);
       _currentUser = value;
     });
 
     await UserPreferences().getLoggedTimeStamp().then((value){
-      print("User notifier service run");
-      print(value);
       _loggedTime = value;
     });
 

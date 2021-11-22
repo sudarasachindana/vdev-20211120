@@ -3,9 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:vdev_riverpod_project/provider/auth.dart';
 import 'package:vdev_riverpod_project/provider/category_provider.dart';
 import 'package:vdev_riverpod_project/provider/logged_user_provider.dart';
-import 'package:vdev_riverpod_project/provider/string_provider.dart';
-import 'package:vdev_riverpod_project/provider/user_provider.dart';
-import 'package:vdev_riverpod_project/util/utilities.dart';
 import 'package:vdev_riverpod_project/widgets/rounded_button_widget.dart';
 
 class DashBoard extends StatelessWidget {
@@ -18,67 +15,15 @@ class DashBoard extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
 
-          //logged user text
-          /*Consumer(builder: (context, watch, child) {
-            final currentUserResponse = watch(responseUserProvider);
-
-            print('current user dash');
-            print(currentUserResponse);
-            print(currentUserResponse.data);
-            print(currentUserResponse.data.value);
-            print(currentUserResponse.data.value.name);
-
-            return currentUserResponse.data.value.name != null && currentUserResponse.data.value.name != ''
-                ? Text(currentUserResponse.data.value.name)
-                : Text('no user');
-              return Text(currentUserResponse.data.value.name);
-            },
-          ),*/
-
-          /*Consumer(builder: (context, watch, child) {
-            final currentUserResponse = watch(responseUserProvider);
-            print('watch response');
-            print(currentUserResponse);
-            return Container(
-              child: currentUserResponse.when(
-                  data: (data) =>
-                      Text(data.name != null && data.name != '' ? data.name : 'no user' ),
-                // loading: () => Center(child: CircularProgressIndicator()),
-              ),
-            );
-
-            },
-          ),*/
-
-          /*Consumer(builder: (context, watch, child) {
-            final currentUserResponse = watch(responseUserProvider);
-            print('watch response');
-            print(currentUserResponse);
-            return currentUserResponse.map(
-              data: (data) => Text(data.value.name),
-              loading: (_) => CircularProgressIndicator(),
-              error: (message) => Text(message.error),
-            );
-
-            },
-          ),*/
-
+          // logged user text
           Consumer(builder: (context, watch, child) {
-
-
             final currentUserResponse = watch(loggedUserData);
-
-            print('current user dash');
-            print(currentUserResponse);
-            print(currentUserResponse.currentUser);
-            print(currentUserResponse.currentUser.name);
 
             return currentUserResponse.currentUser.name != null && currentUserResponse.currentUser.name != ''
                 ? Text(currentUserResponse.currentUser.name)
                 : Text('no user');
             },
           ),
-
 
 
 
@@ -125,7 +70,6 @@ class DashBoard extends StatelessWidget {
           Consumer(builder: (context, watch, child) {
 
             final currentUserResponse = watch(loggedUserData);
-
 
             return currentUserResponse.loggedTime != null && currentUserResponse.loggedTime != ''
                 ? Text(currentUserResponse.loggedTime)
@@ -221,8 +165,7 @@ class DashBoard extends StatelessWidget {
 
   Widget makeAppBar(BuildContext context) {
     return AppBar(
-      title: Text(
-        context.read(appNameRiverpod),
+      title: Text('V-Dev Test'
       ),
       elevation: 0,
       backgroundColor: Colors.transparent,
@@ -230,6 +173,7 @@ class DashBoard extends StatelessWidget {
     );
   }
 
+  // logout button action
   void _doLogout(BuildContext context) {
     context.read(userLogProvider).userLogOut().then((value){
       Navigator.pushReplacementNamed(context, '/login');

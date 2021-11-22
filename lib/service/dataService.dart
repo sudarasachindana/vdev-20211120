@@ -1,16 +1,14 @@
 import 'package:http/http.dart' as http;
-import 'package:vdev_riverpod_project/models/data.dart';
+import 'package:vdev_riverpod_project/models/category.dart';
 
 class DataService {
-  List<JokesApi> getJokes;
+  List<Category> getJokes;
   List jokes = [];
   String url = "http://jsonplaceholder.typicode.com/posts";
 
-  Future<List<JokesApi>> getListJokesApi() async {
-    print("category service");
-    // print(value);
+  Future<List<Category>> getListCategoryApi() async {
     var resp = await http.get(Uri.parse(url));
-    getJokes = jokesApiFromJson(resp.body);
+    getJokes = categoryApiFromJson(resp.body);
     return getJokes;
   }
 }

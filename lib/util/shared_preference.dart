@@ -9,24 +9,14 @@ class UserPreferences {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
 
     prefs.setString("name", user.name.toString());
-
-    print("object save prefere");
-    print(user.name);
-
     return prefs.commit();
   }
 
   Future<User> getUser() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-
     String name = prefs.getString("name");
 
-    print("get pref user");
-    print(name);
-
-    return User(
-        name: name,
-        );
+    return User(name: name,);
   }
 
   void removeUser() async {

@@ -15,30 +15,24 @@ class AuthChecker extends ConsumerWidget {
   Widget build(BuildContext context, ScopedReader watch) {
     final _authState = watch(responseUserProvider);
     return MaterialApp(
-      title: "V-Dev Test App",
-      theme: ThemeData(
-        scaffoldBackgroundColor: Colors.deepOrangeAccent.withOpacity(0.2),
-      ),
-      debugShowCheckedModeBanner: false,
-      home: _authState.when(
-          data: (data) {
-            print('data ob main');
-            print(data);
-            print(data.name);
-            /* if (data.name != null && data.name != '') return HomePage();
-            return LoginPage();*/
-
-            if (data.name != null && data.name != '') return DashBoard();
-            return Login();
-          },
-          loading: () => LoadingScreen(),
-          error: (e, trace) => ErrorScreen(e, trace)),
-
+        title: "V-Dev Test App",
+        theme: ThemeData(
+          scaffoldBackgroundColor: Colors.deepOrangeAccent.withOpacity(0.2),
+        ),
+        debugShowCheckedModeBanner: false,
+        home: _authState.when(
+            data: (data) {
+              //check logged user all-ready exist
+              //and route to dashboard or login screen
+              if (data.name != null && data.name != '') return DashBoard();
+              return Login();
+            },
+            loading: () => LoadingScreen(),
+            error: (e, trace) => ErrorScreen(e, trace)),
         routes: {
           '/dashboard': (context) => DashBoard(),
           '/login': (context) => Login(),
           '/loading': (context) => LoadingScreen(),
-        }
-    );
+        });
   }
 }

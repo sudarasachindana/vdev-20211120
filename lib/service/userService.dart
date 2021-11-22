@@ -6,9 +6,6 @@ class UserService {
 
   Future<User> getCurrentUser() async {
     await UserPreferences().getUser().then((value){
-
-      print("User service user");
-      print(value);
       currentUser = value;
     });
     return currentUser;

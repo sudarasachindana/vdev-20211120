@@ -16,7 +16,6 @@ class _LoginState extends State<Login> {
   String _username, _password;
 
   void _doLoginProcess(BuildContext context) {
-
     context.read(userLogProvider).login(_username, _password).then((value) {
       if (value['status']) {
         Navigator.pushReplacementNamed(context, '/dashboard');
@@ -36,7 +35,7 @@ class _LoginState extends State<Login> {
       autofocus: false,
       validator: validateEmail,
       onSaved: (value) => _username = value,
-      decoration: buildInputDecoration("Confirm password", Icons.email),
+      decoration: buildInputDecoration(Icons.email),
     );
 
     final passwordField = TextFormField(
@@ -44,7 +43,7 @@ class _LoginState extends State<Login> {
       obscureText: true,
       validator: (value) => value.isEmpty ? "Please enter password" : null,
       onSaved: (value) => _password = value,
-      decoration: buildInputDecoration("Confirm password", Icons.lock),
+      decoration: buildInputDecoration(Icons.lock),
     );
 
     var loading = Row(
@@ -55,18 +54,17 @@ class _LoginState extends State<Login> {
       ],
     );
 
+    // login button action
     doLogin() {
       final form = formKey.currentState;
 
       if (form.validate()) {
         form.save();
-
         _doLoginProcess(context);
       } else {
         print("form is invalid");
       }
     }
-
 
     return SafeArea(
       child: Scaffold(
@@ -78,23 +76,33 @@ class _LoginState extends State<Login> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(height: 15.0),
-                label("Email"),
-                SizedBox(height: 5.0),
-                usernameField,
                 SizedBox(height: 20.0),
-                label("Password"),
-                SizedBox(height: 5.0),
-                passwordField,
+                Row(
+                  children: [
+                    // email label
+                    Expanded(flex: 1, child: Text('Email :')),
+                    // email textField
+                    Expanded(flex: 2, child: usernameField),
+                  ],
+                ),
                 SizedBox(height: 20.0),
+                Row(
+                  children: [
+                    // password label
+                    Expanded(flex: 1, child: Text('Password :')),
+                    // password field
+                    Expanded(flex: 2, child: passwordField),
+                  ],
+                ),
+                SizedBox(height: 20.0),
+
+                //login button
                 Consumer(
                   builder: (context, watch, child) {
                     final loginProvider = watch(userLogProvider);
-                    print('loginProvider----Status');
-                    print(loginProvider.loggedInStatus);
                     return loginProvider.loggedInStatus == Status.Authenticating
                         ? loading
-                        : longButtons("Login", doLogin);
+                        : longButtons("Sign-in", doLogin);
                   },
                 ),
               ],
